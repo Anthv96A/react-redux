@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 
-
 const initialState = {
     todo: '',
     isError: false,
@@ -8,22 +7,15 @@ const initialState = {
 }
 const actions = {
     TYPING : 'TYPING',
-    SUBMIT: 'SUBMIT',
-    RESET: 'RESET',
+    SUCCESS: 'SUCCESS',
     INVALID: 'INVALID'
 }
 
-function reducer(state, action) {
-    switch (action.type) {
+function reducer(state, { type, value }) {
+    switch (type) {
         case actions.TYPING:
-           return {
-               ...state,
-               todo: action.value
-           }
-        case actions.SUBMIT:
-           const isError = state.todo.trim().length === 0;
-           return isError ? { ...state, isError: true } : {...state};
-        case actions.RESET:
+           return { ...state, todo: value };
+        case actions.SUCCESS:
             return { ...state, isError: false, todo: '' };
         case actions.INVALID:
             return { ...state, isError: true, todo: '' };
@@ -34,21 +26,20 @@ function reducer(state, action) {
 
 const AddTodoForm = ({ onSubmit }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    
+
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch({type: actions.SUBMIT });
-        if(state.todo.trim().length === 0){
-            return dispatch({type: actions.INVALID });
-        }
+        if(state.todo.trim().length === 0)
+            return dispatch({ type: actions.INVALID });
+        
         onSubmit(state.todo);
-        dispatch({type: actions.RESET });
+        dispatch({ type: actions.SUCCESS });
     }
     const err = state.isError === true ? <span style={{color: 'red'}}>Todo can't be empty</span> : null
     return (
         <div>
             <form onSubmit={submitHandler}>
-                <input type="text" value={state.todo} onChange={(e) => dispatch({type: actions.TYPING, value: e.target.value})}/>
+                <input type="text" value={state.todo} onChange={(e) => dispatch({ type: actions.TYPING, value: e.target.value })}/>
                 <button disabled={state.todo === ''} type="submit">Add Todo</button>    
                 <br/>
                 {err}
