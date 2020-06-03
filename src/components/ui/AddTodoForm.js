@@ -14,7 +14,7 @@ function reducer(state, { type, value }) {
     switch (type) {
         case actions.TYPING:
            const isError = state.isError === true ? value.trim().length === 0 : false;
-           return { ...state, isError: isError, todo: value };
+            return { ...state, isError: isError, todo: value };
         case actions.SUCCESS:
             return { ...state, isError: false, todo: '' };
         case actions.INVALID:

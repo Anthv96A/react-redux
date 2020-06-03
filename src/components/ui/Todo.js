@@ -7,15 +7,16 @@ export const Todo = ({ id, onClick, onRemove, completed, text, onUpdate }) => {
     const style = { textDecoration: completed ? 'line-through' : 'none'};
     const jsxDisplayOrUpdateItem = isUpdating ? <input type="text" onChange={(e) => setUpdateTodo(e.target.value)} value={updateTodo}/> : <b>{text}</b>;
 
-    const jsxDeleteOrCancelVisible = !isUpdating 
-        ? <button style={{marginLeft: '20px'}} onClick={onRemove}>Remove from list</button> :
-          <button style={{marginLeft: '20px'}} onClick={() => setIsUpdating(false)}>Cancel</button>;
+    const jsxDeleteOrCancelVisible = !isUpdating ?
+         <button style={{marginLeft: '20px'}} onClick={onRemove}>Remove from list</button> :
+         <button style={{marginLeft: '20px'}} onClick={() => setIsUpdating(false)}>Cancel</button>;
     
     const updateText = !isUpdating ? 'Update' : 'Submit';
     const onUpdateHandler = (e) => {
         e.preventDefault();
         if(isUpdating)
             onUpdate(id, updateTodo);
+            
         setIsUpdating(!isUpdating); 
     }
     return (
