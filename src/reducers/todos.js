@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO } from '../actions/redux-actions';
+import { ADD_TODO, TOGGLE_TODO, REMOVE_TODO } from '../actions/redux-actions';
 
 const todos = (state = [], action) => {
     switch (action.type) {
@@ -9,6 +9,8 @@ const todos = (state = [], action) => {
             ]
         case TOGGLE_TODO: 
             return state.map(t => t.id === action.id ? {...t, completed: !t.completed }: t);
+        case REMOVE_TODO:
+            return state.filter(t => t.id !== action.id);
         default:
             return state;
     }

@@ -1,21 +1,28 @@
 import { v4 as uuid } from 'uuid';
-import { ADD_TODO, SET_VISIBILITY_FILTER, TOGGLE_TODO} from './redux-actions';
+import * as actions from './redux-actions';
 
 export const addTodo = text => ({
-    type: ADD_TODO,
+    type: actions.ADD_TODO,
     id: uuid(),
     text: text
 });
 
 export const setVisibilityFilter = filter => ({
-    type: SET_VISIBILITY_FILTER,
+    type: actions.SET_VISIBILITY_FILTER,
     filter: filter
 });
 
 export const toggleTodo = id => ({
-    type: TOGGLE_TODO,
+    type: actions.TOGGLE_TODO,
     id: id
 });
+
+export const removeTodo = id => {
+    return {
+        type: actions.REMOVE_TODO,
+        id: id
+    }
+};
 
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
