@@ -2,8 +2,7 @@ import React, { useReducer } from 'react';
 
 const initialState = {
     todo: '',
-    isError: false,
-    isFormValid: false
+    isError: false
 }
 const actions = {
     TYPING : 'TYPING',
@@ -14,7 +13,8 @@ const actions = {
 function reducer(state, { type, value }) {
     switch (type) {
         case actions.TYPING:
-           return { ...state, todo: value };
+           const isError = state.isError === true ? value.trim().length === 0 : false;
+           return { ...state, isError: isError, todo: value };
         case actions.SUCCESS:
             return { ...state, isError: false, todo: '' };
         case actions.INVALID:
@@ -31,8 +31,8 @@ const AddTodoForm = ({ onSubmit }) => {
         e.preventDefault();
         if(state.todo.trim().length === 0)
             return dispatch({ type: actions.INVALID });
-        
-        onSubmit(state.todo);
+        const todo = removeWhiteSpace(state.todo);
+        onSubmit(todo);
         dispatch({ type: actions.SUCCESS });
     }
     const err = state.isError === true ? <span style={{color: 'red'}}>Todo can't be empty</span> : null
@@ -47,5 +47,9 @@ const AddTodoForm = ({ onSubmit }) => {
         </div>
     )
 };
+
+function removeWhiteSpace(value){
+    return value.replace(/\s/g, '');
+}
 
 export default AddTodoForm;
