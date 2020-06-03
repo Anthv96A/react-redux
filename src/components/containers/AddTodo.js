@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../../actions/index';
+import { addTodoAsync } from '../../actions/index';
 import AddTodoForm from '../ui/AddTodoForm';
 
 const AddTodo = ({ dispatch }) => {
-    const onSubmit = todo => dispatch(addTodo(todo));
+    const onSubmit = todo => dispatch(addTodoAsync(todo));
     return <AddTodoForm onSubmit={onSubmit}/>
 };
 

@@ -1,12 +1,15 @@
 import { v4 as uuid } from 'uuid';
 import * as actions from './redux-actions';
 
-export const addTodo = text => ({
-    type: actions.ADD_TODO,
-    id: uuid(),
-    text: text
-});
-
+async function saveTodoAsync(text) {
+    return await new Promise(resolve => setTimeout(() => resolve(text), 500));
+}
+export const addTodoAsync = text => {
+    return async dispatch => {
+       const result = await saveTodoAsync(text);
+       dispatch({ type: actions.ADD_TODO, id: uuid(), text: result});
+    }
+};
 export const setVisibilityFilter = filter => ({
     type: actions.SET_VISIBILITY_FILTER,
     filter: filter
