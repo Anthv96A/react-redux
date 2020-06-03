@@ -1,25 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../../actions/index';
+import AddTodoForm from '../ui/AddTodoForm';
 
 const AddTodo = ({ dispatch }) => {
-    let input = '';
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        if(!input.value.trim() || input.value.trim() === '') 
-            return;
-        dispatch(addTodo(input.value));
-        input.value = '';
-    }
-    return (
-        <div>
-            <form onSubmit={onSubmit}>
-                <input ref={node => (input = node)}/>
-                <button type="submit">Add Todo</button>    
-            </form>
-        </div>
-    )
+    const onSubmit = todo => dispatch(addTodo(todo));
+    return <AddTodoForm onSubmit={onSubmit}/>
 };
 
 export default connect()(AddTodo);

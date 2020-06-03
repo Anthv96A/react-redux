@@ -24,6 +24,14 @@ export const removeTodo = id => {
     }
 };
 
+export const updateTodo = (id, updateTodo) => {
+    return { 
+        type: actions.UPDATE_TODO,
+        id: id,
+        todo: updateTodo
+    }
+}
+
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
